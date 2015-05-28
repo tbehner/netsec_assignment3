@@ -1,0 +1,44 @@
+\documentclass{scrartcl}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[dvipsnames,svgnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{float}
+\usepackage{hyperref}
+\definecolor{darkblue}{rgb}{0,0,.5}
+\hypersetup{pdftex=true, colorlinks=true, breaklinks=true, linkcolor=darkblue, menucolor=darkblue, pagecolor=darkblue, urlcolor=darkblue}
+
+\usepackage{amsmath, amssymb, stmaryrd}
+\usepackage{amsthm, mathtools}
+
+\theoremstyle{definition}
+\newtheorem{exercise}{Task}
+
+\usepackage{tikz}
+\title{Assignment Sheet 2}
+\author{Timm Behner \and Christopher Kannen \and Eva-Lotta Teutrine}
+\date{\today}
+
+\begin{document}
+\maketitle
+\setcounter{exercise}{2}
+\begin{exercise}
+    Let $\overline m$ be an arbitrary message in blocks of length 8, hence
+    $\overline m = \left( \overline m_1, \dots , \overline m_t \right)$. Then define
+    \begin{align}
+        y_i = \begin{cases}
+            0 & \text{ if } K(m)_i = K(\overline m)_i \\
+            1 & \text{ if } K(m)_i \neq K(\overline m)_i \\
+        \end{cases}
+    \end{align}
+    where $K(m)_i$ denotes the $i$th bit of the 64-bit value $K(m)$. Let $m' =
+    \left( \overline m_1, \dots , \overline m_t, y \right)$.
+    Then $K(m) = K(\overline m) \oplus y = K(m')$ 
+    From this follows $H_k(m') = E_k(K(m)) = E_k(K(m')) = H_k(m)$ which can be
+    known without the knowledge of the key $k$.
+\end{exercise}
+\end{document}
