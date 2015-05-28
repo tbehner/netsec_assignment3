@@ -1,24 +1,29 @@
-TLS_RSA_RC4_128_MD5
-    RSA is used to exchange keys for the communication
-    RSA is also used for authentication
-    RC4 is used to encrypt the communication
-    MD5 is used to secure the integrity of data
-
 TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
     ECDHE is used to exchange keys for the communication
     RSA is used for authentication
     AES with GCM is used to encrypt the communication
     SHA256 is used to secure the integrity of data
 
-Md5 vs Sha256
-    Md5 has 128 bit hash value,
-    Sha256 has 256 bit hash value,
-    so the possibility to have the same hash for two different messages is much much smaller for Sha256,
-    furthermore Md5 might be broken
+TLS_RSA_RC4_128_MD5
+    RSA is used to exchange keys for the communication
+    RSA is also used for authentication
+    RC4 is used to encrypt the communication
+    MD5 is used to secure the integrity of data
+
+MD5 vs SHA256
+    MD5 has 128 bit hash value,
+    SHA256 has 256 bit hash value,
+    so the possibility to have the same hash for two different messages is much much smaller for SHA256,
+    furthermore MD5 might be broken
 
 RC4 vs AES
     RC4 is a block cipher. It is fast, simpler, not so secure. RC4 might be broken.
     AES is a stream cipher. It is not so fast, but much more secure.
+
+Since MD5 and RC4 are presumed to be broken and having a second algorithm for authentication instead of using the same algorithm as for key exchange, the first cipher suite is more secure.
+An attacker could find a collision for MD5 where the actual data and some other data have the same hash. This is much more probable for the shorter MD5 hash than for the longer SHA256 hash.
+He could use this to catch data before the client receives it and send different data instead with the same hash, so the receiver will never know, that the data got exchanged.
+If an attacker knows how to break RC4, he could use this to read the messages, where sender and receiver think that their data is encrypted and not visible to anyone else.
 
 http://www.differencebetween.net/technology/internet/difference-between-aes-and-rc4/
 http://www.kuketz-blog.de/nsa-abhoersichere-ssl-verschluesselung-fuer-apache-und-nginx/
