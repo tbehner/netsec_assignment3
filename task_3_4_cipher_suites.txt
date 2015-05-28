@@ -1,0 +1,4 @@
+Md5 vs Sha256
+    Md5 has 128 bit hash value
+    Sha256 has 256 bit hash value
+    so the possibility to have the same hash for two different messages is much much smaller for Sha256
