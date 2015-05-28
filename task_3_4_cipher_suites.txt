@@ -1,4 +1,24 @@
+TLS_RSA_RC4_128_MD5
+    RSA is used to exchange keys for the communication
+    RSA is also used for authentication
+    RC4 is used to encrypt the communication
+    MD5 is used to secure the integrity of data
+
+TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+    ECDHE is used to exchange keys for the communication
+    RSA is used for authentication
+    AES with GCM is used to encrypt the communication
+    SHA256 is used to secure the integrity of data
+
 Md5 vs Sha256
-    Md5 has 128 bit hash value
-    Sha256 has 256 bit hash value
-    so the possibility to have the same hash for two different messages is much much smaller for Sha256
+    Md5 has 128 bit hash value,
+    Sha256 has 256 bit hash value,
+    so the possibility to have the same hash for two different messages is much much smaller for Sha256,
+    furthermore Md5 might be broken
+
+RC4 vs AES
+    RC4 is a block cipher. It is fast, simpler, not so secure. RC4 might be broken.
+    AES is a stream cipher. It is not so fast, but much more secure.
+
+http://www.differencebetween.net/technology/internet/difference-between-aes-and-rc4/
+http://www.kuketz-blog.de/nsa-abhoersichere-ssl-verschluesselung-fuer-apache-und-nginx/
