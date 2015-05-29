@@ -22,6 +22,14 @@ def get_top_alexa_ranking():
     if not os.path.isfile('top-1m.csv'):
         raise EnvironmentError
 
+def https_possible(server):
+    try:
+        check_output('curl -m 3 https://{} >/dev/null'.format(server))
+    except subprocess.CalledProcessError:
+        return False
+    else:
+        return True
+
 def parse_servers(filename,nmbr):
     servers = []
     with open(filename,'r') as serv_file:
@@ -40,7 +48,7 @@ def plot_histogram(hist):
     plt.savefig("histogram.png")
     plt.close()
     
-get_top_alexa_ranking()
+#get_top_alexa_ranking()
 servers = parse_servers('top-1m.csv', 100)
 
 port = '443'
@@ -54,17 +62,20 @@ total = len(servers)
 
 for server in servers:
     counter += 1
-    pbar = ProgressBar(len(ciphers))
-    print("({}/{}) Inspecting {}".format(counter, total, server))
-    pbar.start()
-    for idx, cipher in enumerate(ciphers):
-        try:
-            ret_string = check_output(openssl_cmd.format(cipher, server + ":" + port))
-        except subprocess.CalledProcessError:
-            pass
-        else:
-            hist[cipher] += 1
-        pbar.update(idx+1)
-    pbar.finish()
+    if https_possible(server):
+        pbar = ProgressBar(len(ciphers))
+        print("({}/{}) Inspecting {}".format(counter, total, server))
+        pbar.start()
+        for idx, cipher in enumerate(ciphers):
+            try:
+                ret_string = check_output(openssl_cmd.format(cipher, server + ":" + port))
+            except subprocess.CalledProcessError:
+                pass
+            else:
+                hist[cipher] += 1
+            pbar.update(idx+1)
+        pbar.finish()
+    else:
+        hist['NO HTTPS'] += 1
 
 plot_histogram(hist)
