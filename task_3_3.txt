@@ -1,0 +1,4 @@
+Task 3.3
+    We act as man in the middle and also initialize the communication between Diffie and Hellman.
+    We connect to both, receive all messages and relay them to the other person.
+    They are communicating with each other, but actually there is our service between.

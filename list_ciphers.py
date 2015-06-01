@@ -8,7 +8,7 @@ import numpy as np
 import matplotlib
 matplotlib.rcParams.update({'figure.autolayout': True})
 import matplotlib.pyplot as plt
-from progressbar import ProgressBar
+#from progressbar import ProgressBar
 
 def check_output(cmd):
     raw_output = subprocess.check_output(cmd, shell=True, stderr=subprocess.STDOUT)
@@ -49,12 +49,13 @@ def plot_histogram(hist):
     plt.close()
     
 #get_top_alexa_ranking()
-servers = parse_servers('top-1m.csv', 100)
+servers = parse_servers('top-1m.csv', 500)
 
 port = '443'
+print("los gehts")
 # FIXME openssl lists some ciphers twice 
 ciphers = list(set(check_output('openssl ciphers ALL:eNULL').strip().split(':')))
-openssl_cmd = 'echo -n | timeout 3 openssl s_client -cipher "{}" -connect "{}" 2>&1'
+openssl_cmd = 'echo -n | timeout 2 openssl s_client -cipher "{}" -connect "{}" 2>&1'
 
 hist = defaultdict(int)
 counter = 0
@@ -63,9 +64,9 @@ total = len(servers)
 for server in servers:
     counter += 1
     if https_possible(server):
-        pbar = ProgressBar(len(ciphers))
+        #pbar = ProgressBar(len(ciphers))
         print("({}/{}) Inspecting {}".format(counter, total, server))
-        pbar.start()
+        #pbar.start()
         for idx, cipher in enumerate(ciphers):
             try:
                 ret_string = check_output(openssl_cmd.format(cipher, server + ":" + port))
@@ -73,8 +74,8 @@ for server in servers:
                 pass
             else:
                 hist[cipher] += 1
-            pbar.update(idx+1)
-        pbar.finish()
+            #pbar.update(idx+1)
+        #pbar.finish()
     else:
         hist['NO HTTPS'] += 1
 
