@@ -1,10 +1,4 @@
-Task 3.2
-    When the attacker knows the original message m, he can calculate the hash value K(m) that is later processed by the encryption function Ek().
-    Now he needs to find another message m', that has the same value, so that K(m) = K(m'), because then the encrpyted values will be the same Ek(K(m)) = Ek(K(m')) <=> H(m) = H(m')
-    
-    How to find a message m' with K(m) = K(m') ?
-        Since we use a XOR operation for calculating the hash value, we can have an almost arbitrary message. The only thing that is non-arbitrary is the last 64bit value xn.
-        When the hash value K(m') is calculated, the last 64bit value has the chance to keep and flip every bit of K(m') that has been calculated so far.
-        To keep a bit at a position, xn must be "0" at this position, to flip a bit, xn must be "1" at this position.
-        Of course this is only one way to get the same hash value. XOR is commutative, so the manipulating 64bit value x can be located at a random position or even split over multiple 64bit values.
-    
+Task 3.3
+    We act as man in the middle and also initialize the communication between Diffie and Hellman.
+    We connect to both, receive all messages and relay them to the other person.
+    They are communicating with each other, but actually there is our service between.

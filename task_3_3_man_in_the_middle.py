@@ -2,7 +2,7 @@ import telnetlib
 from time import sleep
 
 def receiveMessage(tn):
-    message = tn.read_until("\n", 0.01)
+    message = tn.read_until("\n", 0.1)
     return message
 
 def sendMessage(tn, message):
