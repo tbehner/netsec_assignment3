@@ -1,4 +1,4 @@
-\documentclass{scrartcl}
+\documentclass[fleqn]{scrartcl}
 \usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -35,10 +35,19 @@
             1 & \text{ if } K(m)_i \neq K(\overline m)_i \\
         \end{cases}
     \end{align}
-    where $K(m)_i$ denotes the $i$th bit of the 64-bit value $K(m)$. Let $m' =
-    \left( \overline m_1, \dots , \overline m_t, y \right)$.
+    where $K(m)_i$ denotes the $i$th bit of the 64-bit value $K(m)$. Let 
+    \begin{align*}
+        m' = \left( \overline m_1, \dots , \overline m_i, y , \overline m_{i+1}, \dots , m_t\right)
+    \end{align*} 
+    for an arbitrary $i \in \left\{ 0, \dots , t \right\}$ with $m_0 =
+    m_{i+1}$ 0 blocks.
     Then $K(m) = K(\overline m) \oplus y = K(m')$ 
     From this follows $H_k(m') = E_k(K(m)) = E_k(K(m')) = H_k(m)$ which can be
     known without the knowledge of the key $k$.
+
+    $y_i$ is defined in such a way because an $1$ at position $i$ flipps the
+    $i$-th bit in an XOR-Operation. Thus to alter the value of $K(m')$ to get
+    the exact same value as $K(m)$, only the bits which are different have to be
+    flipped.
 \end{exercise}
 \end{document}
