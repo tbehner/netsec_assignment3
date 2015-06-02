@@ -63,12 +63,12 @@ hist = defaultdict(int)
 
 # analyze each domain in list and write information in file
 with open("task_3_5_cipher_suite_output.txt", "w") as f:
-    for domain in domains:
+    for i in xrange(len(domains)):
         print("{}/{}".format(i+1, len(domains)))
-        cipher_information = getServerTlsInformation(domain, 2)
+        cipher_information = getServerTlsInformation(domains[i], 2)
         hist[cipher_information[0]] += 1
         f.write("----------------------------------------\r\n")
-        f.write("{}\r\n".format(domain))
+        f.write("{}\r\n".format(domains[i]))
         for info in cipher_information:
             f.write("{}\r\n".format(info))
         f.write("----------------------------------------\r\n")
