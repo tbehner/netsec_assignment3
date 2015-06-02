@@ -7,6 +7,7 @@ import numpy as np
 import matplotlib
 matplotlib.rcParams.update({'figure.autolayout': True})
 import matplotlib.pyplot as plt
+import os
 
 # read file with domains, every line must contain one domain and return list of domains
 def getDomainsFromFile(file_name):
@@ -23,7 +24,22 @@ def getServerTlsInformation(domain, timeout):
         # create socket, then use ssl to connect
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.settimeout(timeout)
-        ssl_sock = ssl.wrap_socket(s, cert_reqs=ssl.CERT_REQUIRED, ca_certs='/etc/ssl/certs/ca-certificates.crt')
+
+        # the file where the certificates are saved is platform dependend
+        # if on your system those are saved in a different place, please add
+        # the filepath to this list 
+        ca_cert_files = [
+                '/etc/ssl/certs/ca-bundle.crt', 
+                '/etc/ssl/certs/ca-certificates.crt',
+                ]
+        ca_cert_file = None
+        for cert_file in ca_cert_files:
+            if os.path.exists(cert_file):
+                ca_cert_file = cert_file
+        if ca_cert_file is None:
+            raise RuntimeError
+
+        ssl_sock = ssl.wrap_socket(s, cert_reqs=ssl.CERT_REQUIRED, ca_certs=ca_cert_file)
         ssl_sock.connect((domain, 443))
         # read and return all cipher information
         return ssl_sock.cipher()
@@ -47,14 +63,14 @@ hist = defaultdict(int)
 
 # analyze each domain in list and write information in file
 with open("task_3_5_cipher_suite_output.txt", "w") as f:
-    for i in xrange(len(domains)):
-        print "%s/%s" % (i+1, len(domains))
-        cipher_information = getServerTlsInformation(domains[i], 2)
+    for domain in domains:
+        print("{}/{}".format(i+1, len(domains)))
+        cipher_information = getServerTlsInformation(domain, 2)
         hist[cipher_information[0]] += 1
         f.write("----------------------------------------\r\n")
-        f.write("%s\r\n" % domains[i])
+        f.write("{}\r\n".format(domain))
         for info in cipher_information:
-            f.write("%s\r\n" % info)
+            f.write("{}\r\n".format(info))
         f.write("----------------------------------------\r\n")
         f.write("\r\n")
 

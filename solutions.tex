@@ -25,7 +25,7 @@
 
 \begin{document}
 \maketitle
-\setcounter{exercise}{2}
+\setcounter{exercise}{1}
 \begin{exercise}
     Let $\overline m$ be an arbitrary message in blocks of length 8, hence
     $\overline m = \left( \overline m_1, \dots , \overline m_t \right)$. Then define
@@ -49,5 +49,57 @@
     $i$-th bit in an XOR-Operation. Thus to alter the value of $K(m')$ to get
     the exact same value as $K(m)$, only the bits which are different have to be
     flipped.
+\end{exercise}
+
+\begin{exercise}
+    see task\_3\_3\_man\_in\_the\_middle.py, task\_3\_3\_decryption\_test.py and
+    task\_3\_3\_output.txt
+\end{exercise}
+
+\begin{exercise}\hfill
+
+    \begin{description}
+        \item[TLS\_ECDHE\_RSA\_WITH\_AES\_128\_GCM\_SHA256]\hfill
+
+            \begin{itemize}
+                \item ECDHE is used to exchange keys for the communication
+                \item RSA is used for authentication
+                \item AES with GCM is used to encrypt the communication
+                \item SHA256 is used to secure the integrity of data
+            \end{itemize}
+
+\item[TLS\_RSA\_RC4\_128\_MD5]
+    \begin{itemize}
+        \item RSA is used to exchange keys for the communication
+        \item RSA is also used for authentication
+        \item RC4 is used to encrypt the communication
+        \item MD5 is used to secure the integrity of data
+    \end{itemize}
+
+\item[MD5 vs SHA256]
+    MD5 has 128 bit hash value,
+    SHA256 has 256 bit hash value,
+    so the possibility to have the same hash for two different messages is much much smaller for SHA256,
+    furthermore MD5 might be broken
+
+\item[RC4 vs AES]
+    RC4 is a block cipher. It is fast, simpler, not so secure. RC4 might be broken.
+    AES is a stream cipher. It is not so fast, but much more secure.
+    \end{description}
+
+Since MD5 and RC4 are presumed to be broken and having a second algorithm for authentication instead of using the same algorithm as for key exchange, the first cipher suite is more secure.
+An attacker could find a collision for MD5 where the actual data and some other data have the same hash. This is much more probable for the shorter MD5 hash than for the longer SHA256 hash.
+He could use this to catch data before the client receives it and send different data instead with the same hash, so the receiver will never know, that the data got exchanged.
+If an attacker knows how to break RC4, he could use this to read the messages, where sender and receiver think that their data is encrypted and not visible to anyone else.
+
+Sources:
+\url{http://www.differencebetween.net/technology/internet/difference-between-aes-and-rc4/}
+\url{http://www.kuketz-blog.de/nsa-abhoersichere-ssl-verschluesselung-fuer-apache-und-nginx/}
+\end{exercise}
+
+\begin{exercise}
+See task\_3\_5\_cipher\_suite.py for the implementation and
+task\_3\_5\_cipher\_suite\_histogram.png and task\_3\_5\_cipher\_suite\_output.txt for the
+output.
 \end{exercise}
 \end{document}
